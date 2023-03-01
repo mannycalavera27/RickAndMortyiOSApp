@@ -54,7 +54,6 @@ final class RMEpisodeDetailViewViewModel {
             expecting: RMEpisode.self) { [weak self] result in
                 switch result {
                     case .success(let model):
-                        print(String(describing: model))
                         self?.fetchReleatedCharacters(episode: model)
                     case .failure:
                         break
