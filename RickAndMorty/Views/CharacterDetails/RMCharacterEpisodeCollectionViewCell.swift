@@ -36,9 +36,7 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .tertiarySystemBackground
-        contentView.layer.cornerRadius = 8
-        contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.systemBlue.cgColor
+        setUpLayer()
         contentView.addSubviews(seasonLabel, nameLabel, airDateLabel)
         setUpConstraints()
     }
@@ -47,21 +45,26 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         fatalError("Unsupported")
     }
     
+    private func setUpLayer() {
+        contentView.layer.cornerRadius = 8
+        contentView.layer.borderWidth = 2
+    }
+    
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             seasonLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             seasonLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
-            seasonLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 10),
+            seasonLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             seasonLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
             
             nameLabel.topAnchor.constraint(equalTo: seasonLabel.bottomAnchor),
             nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
-            nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 10),
+            nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
             
             airDateLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
             airDateLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
-            airDateLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 10),
+            airDateLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             airDateLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
         ])
     }
@@ -77,8 +80,9 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         viewModel.registerForData { [weak self] data in
             self?.nameLabel.text = data.name
             self?.seasonLabel.text = "Episode" + data.episode
-            self?.airDateLabel.text = "Aired on" + data.air_date
+            self?.airDateLabel.text = "Aired on " + data.air_date
         }
         viewModel.fetchEpisode()
+        contentView.layer.borderColor = viewModel.borderColor.cgColor
     }
 }
