@@ -40,7 +40,7 @@ enum RMSettingsOption: CaseIterable {
             case .rateApp:
                 return .systemBlue
             case .contactUs:
-                return .systemGray
+                return .systemGreen
             case .terms:
                 return .systemRed
             case .privacy:
