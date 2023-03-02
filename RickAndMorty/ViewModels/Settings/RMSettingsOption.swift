@@ -29,7 +29,7 @@ enum RMSettingsOption: CaseIterable {
             case .apiReference:
                 return URL(string: "https://rickandmortyapi.com/documentation")
             case .viewSeries:
-                return URL(string: "https://youtube.com/playlist?list=")
+                return URL(string: "https://www.youtube.com/watch?v=EZpZDuOAFKE&list=PL5PR3UyfTWvdl4Ya_2veOB6TM16FXuv4y")
             case .viewCode:
                 return URL(string: "https://github.com/mannycalavera27/RickAndMortyiOSApp")
         }
