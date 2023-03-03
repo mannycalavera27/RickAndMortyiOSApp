@@ -23,12 +23,12 @@ final class RMCharacterViewController: UIViewController, RMCharacterListViewDele
         navigationItem.rightBarButtonItem = .init(
             barButtonSystemItem: .search,
             target: self,
-            action: #selector(didTapSeach)
+            action: #selector(didTapSearch)
         )
     }
     
     @objc
-    private func didTapSeach() {
+    private func didTapSearch() {
         let vc = RMSearchViewController(config: .init(type: .character))
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
