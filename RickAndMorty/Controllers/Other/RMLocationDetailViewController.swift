@@ -1,21 +1,21 @@
 //
-//  RMEpisodeDetailViewController.swift
+//  RMLocationDetailViewController.swift
 //  RickAndMorty
 //
-//  Created by Tiziano Cialfi on 28/02/23.
+//  Created by Tiziano Cialfi on 03/03/23.
 //
 
 import UIKit
 
-/// VC to show details about single episode
-final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailViewViewModelDelegate, RMEpisodeDetailViewDelegate {
-    private let viewModel: RMEpisodeDetailViewViewModel
+class RMLocationDetailViewController: UIViewController, RMLocationDetailViewViewModelDelegate, RMLocationDetailViewDelegate {
+    private let viewModel: RMLocationDetailViewViewModel
     
-    private let detailView = RMEpisodeDetailView()
+    private let detailView = RMLocationDetailView()
     
     // MARK: - Init
     
-    init(url: URL?) {
+    init(location: RMLocation) {
+        let url = URL(string: location.url)
         self.viewModel = .init(endpointUrl: url)
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,14 +31,14 @@ final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailView
         view.addSubview(detailView)
         detailView.delegate = self
         addConstraints()
-        title = "Episode"
+        title = "Location"
         navigationItem.rightBarButtonItem = .init(
             barButtonSystemItem: .action,
             target: self,
             action: #selector(didTapShare)
         )
         viewModel.delegate = self
-        viewModel.fetchEpisodeData()
+        viewModel.fetchLocationData()
     }
     
     private func addConstraints() {
@@ -56,7 +56,7 @@ final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailView
     }
     
     // MARK: - View Delegate
-    func rmEpisodeDetailView(_ detailView: RMEpisodeDetailView, didSelect character: RMCharacter) {
+    func rmLocationDetailView(_ detailView: RMLocationDetailView, didSelect character: RMCharacter) {
         let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
         vc.title = character.name
         vc.navigationItem.largeTitleDisplayMode = .never
@@ -64,8 +64,7 @@ final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailView
     }
     
     // MARK: - ViewModel Delegate
-    
-    func didFetchEpisodeDetails() {
+    func didFetchLocationDetails() {
         detailView.configure(with: viewModel)
     }
 }
