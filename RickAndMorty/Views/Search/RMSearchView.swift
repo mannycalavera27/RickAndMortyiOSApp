@@ -16,8 +16,9 @@ final class RMSearchView: UIView {
     
     private let viewModel: RMSearchViewViewModel
     
-    // MARK: - Subivews
+    // MARK: - Subviews
     private let searchInputView = RMSearchInputView()
+    
     private let noResultsView = RMNoSearchResultsView()
     
     // MARK: - Init
@@ -29,8 +30,13 @@ final class RMSearchView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         addSubviews(noResultsView, searchInputView)
         addConstraints()
+        
         searchInputView.configure(with: .init(type: viewModel.config.type))
         searchInputView.delegate = self
+        
+        viewModel.registerOptionChangeBlock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
+        }
     }
     
     required init?(coder: NSCoder) {
