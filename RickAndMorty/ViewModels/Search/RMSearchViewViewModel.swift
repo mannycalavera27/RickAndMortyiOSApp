@@ -29,10 +29,13 @@ final class RMSearchViewViewModel {
     }
     
     public func executeSearch() {
-        searchText = "Rick"
+        print("Search text: \(searchText)")
         
         var queryParams: [URLQueryItem] = [
-            URLQueryItem(name: "name", value: searchText)
+            URLQueryItem(
+                name: "name",
+                value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            )
         ]
         
         queryParams.append(contentsOf: optionMap.enumerated().compactMap{ _, element in
@@ -46,13 +49,13 @@ final class RMSearchViewViewModel {
             queryParameters: queryParams
         )
         
-        print(request.url?.absoluteString)
+        print(String(describing: request.url?.absoluteString))
         
         RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { result in
             switch result {
                 case .success(let model):
                     print("Search results found: \(model.results.count)")
-                case .failure(let error):
+                case .failure:
                     break
             }
         }

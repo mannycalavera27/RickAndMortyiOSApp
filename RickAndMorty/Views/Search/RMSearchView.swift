@@ -17,6 +17,7 @@ final class RMSearchView: UIView {
     private let viewModel: RMSearchViewViewModel
     
     // MARK: - Subviews
+    
     private let searchInputView = RMSearchInputView()
     
     private let noResultsView = RMNoSearchResultsView()
@@ -84,5 +85,13 @@ extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
 extension RMSearchView: RMSearchInputViewDelegate {
     func rmSearchInputView(_ inputView: RMSearchInputView, didSelectOption option: RMSearchInputViewViewModel.DynamicOption) {
         delegate?.rmSearchView(self, didSelectOption: option)
+    }
+    
+    func rmSearchInputView(_ inputView: RMSearchInputView, didChangeSearchText text: String) {
+        viewModel.set(query: text)
+    }
+    
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: RMSearchInputView) {
+        viewModel.executeSearch()
     }
 }
